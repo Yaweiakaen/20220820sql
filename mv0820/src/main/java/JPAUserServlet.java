@@ -44,7 +44,9 @@ public class JPAUserServlet extends HttpServlet {
 	        }	        
 	        entityManager.getTransaction().commit();
 	        entityManager.close();
-            response.getWriter().append(data);
+	        request.setAttribute("users", result);
+	        request.getRequestDispatcher("user.jsp").forward(request, response);
+            //response.getWriter().append(data);
 
 	}
 
