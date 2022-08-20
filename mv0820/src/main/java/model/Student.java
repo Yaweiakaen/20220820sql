@@ -47,4 +47,9 @@ public class Student implements Serializable {
 		this.username = username;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", age=" + age + ", username=" + username + "]";
+	}
+
 }
