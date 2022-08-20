@@ -1,28 +1,31 @@
 
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
-import java.util.*;
+
+import model.Student;
+
 /**
- * Servlet implementation class JPAUserServlet
+ * Servlet implementation class JPAStudentServlet
  */
-@WebServlet("/JPAUserServlet")
-public class JPAUserServlet extends HttpServlet {
+@WebServlet("/JPAStudentServlet")
+public class JPAStudentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JPAUserServlet() {
+    public JPAStudentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,22 +35,21 @@ public class JPAUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("mv0820");
-	     EntityManager entityManager = entityManagerFactory.createEntityManager();
-	     entityManager.getTransaction().begin();
-	        String data="";
-	        List<User> result = entityManager.createNamedQuery("User.findAll").getResultList();
-	       // List<User> result = entityManager.createQuery("select u  from User u ").getResultList();
-	        for (User user : result) {
-	            System.out.println(user.getName());
-	            data+="User ID:"+user.getId()+" User Name:"+user.getName()+"\n";
-	        }	        
-	        entityManager.getTransaction().commit();
-	        entityManager.close();
-	        request.setAttribute("users", result);
-	        request.getRequestDispatcher("user.jsp").forward(request, response);
-            //response.getWriter().append(data);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("mv0820");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
 
+        Query query = em.createQuery("SELECT s FROM Student s");
+       
+        List<Student> list = query.getResultList();
+        System.out.println("Student Name :");
+        for (Student s : list) {
+            System.out.println(s);
+        }
+        em.close();
+        emf.close();
+        request.setAttribute("students", list);
+        request.getRequestDispatcher("student.jsp").forward(request, response);
 	}
 
 	/**
