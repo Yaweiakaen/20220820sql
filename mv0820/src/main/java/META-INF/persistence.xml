@@ -3,6 +3,7 @@
 	<persistence-unit name="mv0820" transaction-type="RESOURCE_LOCAL">
 		<class>model.User</class>
 		<class>model.Student</class>
+		<class>model.Coffee</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/classicmodels?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=Asia/Taipei"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
